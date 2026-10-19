@@ -1,0 +1,28 @@
+name: Miscellaneous
+description: Create a new miscellaneous issue
+title: "[MISC] "
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Do not post suggestions here!
+        
+        This board is meant to log **problems with the mod** only.
+        Issues must be resolvable so they can be closed once the problem is fixed.
+        Suggestions end up polluting the board, making it harder to keep track of things.
+        
+        If you would like to propose ideas for the mod, please use the **Discussions** tab.
+        In it, posts can be upvoted, and you can reply individually to messages, making it a better place to discuss ideas.
+        
+        You can find the [Discussions](https://github.com/Jaronline/java-libraries/discussions) tab next to other tabs in this repository:
+        
+        <img width="604" height="47" alt="Image" src="https://github.com/user-attachments/assets/86f48d57-7230-4864-b665-4f971d9cef53" />
+        
+        Any issues deemed as suggestions will be closed, and then **converted to discussions**. You can find your post in that tab afterwards.
+
+  - type: textarea
+    attributes:
+      label: Add a description
+    validations:
+      required: true
