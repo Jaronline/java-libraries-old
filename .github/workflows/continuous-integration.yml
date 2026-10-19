@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  JAVA_DISTRIBUTION: ${{ vars.JAVA_DISTRIBUTION || 'microsoft' }}
+  JAVA_VERSION: ${{ vars.JAVA_VERSION || 25 }}
+  JAVA_CACHE: maven
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+      - name: Setup Java
+        uses: actions/setup-java@v6.1.0
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ env.JAVA_CACHE }}
+      - name: Build
+        run: |
+          chmod +x mvnw
+          ./mvnw package
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Setup Java
+        uses: actions/setup-java@v6.1.0
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ env.JAVA_CACHE }}
+      - name: Lint
+        run: |
+          chmod +x mvnw
+          ./mvnw spotless:check
+
+  summary:
+    name: CI Summary
+    needs:
+      - build
+      - lint
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Build Result
+        uses: Jaronline/.github/actions/check-job-or-step-result@main
+        with:
+          result: ${{ needs.build.result }}
+      - name: Check Lint Result
+        uses: Jaronline/.github/actions/check-job-or-step-result@main
+        with:
+          result: ${{ needs.lint.result }}

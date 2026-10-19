@@ -1,0 +1,4 @@
+extends:
+  - "Jaronline/.github:.github/labels/maven/root.yml"
+  - "Jaronline/.github:.github/labels/maven/wrapper.yml"
+labels: []

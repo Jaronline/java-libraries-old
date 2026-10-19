@@ -1,0 +1,8 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>jaronline/.github//renovate/maven/base",
+    "github>jaronline/.github//renovate/maven/wrapper",
+    "github>jaronline/.github//renovate/github/actions"
+  ]
+}

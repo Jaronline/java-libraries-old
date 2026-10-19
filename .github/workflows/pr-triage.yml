@@ -1,0 +1,22 @@
+name: PR Triage
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  Labeler:
+    name: Label PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label Pull Request
+        uses: actions/labeler@v7.0.0
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          sync-labels: true

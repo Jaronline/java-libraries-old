@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.1.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.jaronline</groupId>
+    <artifactId>java-libraries</artifactId>
+    <version>0.0.0</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <github.url>https://github.com/Jaronline/java-libraries</github.url>
+        <spotless.version>3.10.4</spotless.version>
+    </properties>
+
+    <inceptionYear>2026</inceptionYear>
+    <developers>
+        <developer>
+            <id>jaronline</id>
+            <name>Jaron Zijlstra</name>
+            <email>info@jaronline.dev</email>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>${github.url}/blob/main/LICENSE</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:${github.url}.git</connection>
+        <developerConnection>scm:git:${github.url}.git</developerConnection>
+        <url>${github.url}</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>${spotless.version}</version>
+                <configuration>
+                    <ratchetFrom>origin/main</ratchetFrom>
+                    <formats>
+                        <format>
+                            <includes>
+                                <include>*/src/*/java/dev/jaronline/**/*.java</include>
+                                <include>*/src/*/kotlin/dev/jaronline/**/*.kt</include>
+                            </includes>
+                            <trimTrailingWhitespace/>
+                            <endWithNewline/>
+                            <indent>
+                                <tabs>true</tabs>
+                                <spacesPerTab>4</spacesPerTab>
+                            </indent>
+                        </format>
+                    </formats>
+                    <java>
+                        <includes>
+                            <include>*/src/*/java/dev/jaronline/**/*.java</include>
+                        </includes>
+                        <removeUnusedImports/>
+                        <replaceRegex>
+                            <name>class-level javadoc indentation fix</name>
+                            <searchRegex>^\\*</searchRegex>
+                            <replacement>*</replacement>
+                        </replaceRegex>
+                        <replaceRegex>
+                            <name>method-level javadoc indentation fix</name>
+                            <searchRegex>\t\\*</searchRegex>
+                            <replacement>\t *</replacement>
+                        </replaceRegex>
+                        <licenseHeader>
+                            <content>/* (C) $YEAR Jaronline */</content>
+                        </licenseHeader>
+                    </java>
+                    <kotlin>
+                        <includes>
+                            <include>*/src/*/kotlin/dev/jaronline/**/*.kt</include>
+                        </includes>
+                        <ktfmt>
+                            <removeUnusedImports />
+                        </ktfmt>
+                        <replaceRegex>
+                            <name>class-level javadoc indentation fix</name>
+                            <searchRegex>^\\*</searchRegex>
+                            <replacement>*</replacement>
+                        </replaceRegex>
+                        <replaceRegex>
+                            <name>method-level javadoc indentation fix</name>
+                            <searchRegex>\t\\*</searchRegex>
+                            <replacement>\t *</replacement>
+                        </replaceRegex>
+                        <licenseHeader>
+                            <content>/* (C) $YEAR Jaronline */</content>
+                        </licenseHeader>
+                    </kotlin>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.6.4</version>
+                <executions>
+                    <execution>
+                        <id>configure-git-hooks</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>git</executable>
+                            <arguments>
+                                <argument>config</argument>
+                                <argument>--local</argument>
+                                <argument>core.hooksPath</argument>
+                                <argument>.githooks</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.16.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

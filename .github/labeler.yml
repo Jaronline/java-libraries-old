@@ -1,0 +1,11 @@
+root:
+  - changed-files:
+      - any-glob-to-any-file:
+          - pom.xml
+mvnw:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .mvn/wrapper/*
+          - .mvn/wrapper/**/*
+          - mvnw
+          - mvnw.cmd
